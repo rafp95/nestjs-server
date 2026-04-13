@@ -13,6 +13,6 @@ export class AuthService {
       roles: [{ id: 1, name: RoleNames.ROOT }],
     });
 
-    return token ? { user, accessToken: token } : null;
+    return token ? { user, token: token } : null;
   }
 }
