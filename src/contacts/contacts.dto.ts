@@ -69,9 +69,14 @@ export class CreateContactResponse {
   contact: Contact;
 }
 
+export class GetContactDto {
+  id: string;
+}
+
 export class UpdateContactDto {
   name: string;
   message: string;
+  email: string;
 }
 
 export class UpdateContactResponse {
