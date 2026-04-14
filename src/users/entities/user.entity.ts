@@ -1,3 +1,6 @@
+import { AST } from 'eslint';
+import Token = AST.Token;
+
 export enum RoleNames {
   ADMIN = 'admin',
   ROOT = 'root',

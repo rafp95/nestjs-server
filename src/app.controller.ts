@@ -11,7 +11,7 @@ export class AppController {
     private readonly storeService: StoreService,
   ) {}
 
-  @Get()
+  @Get('/health-check')
   getHello(): string {
     return this.appService.getHello();
   }

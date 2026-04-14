@@ -19,15 +19,15 @@ export enum SortDir {
 export class GetContactsDto {
   @IsNumber()
   @IsOptional()
-  @Min(1)
+  @Min(0)
   @Transform((prop) => parseInt(prop.value, 10))
-  pageIndex?: number = 1;
+  pageIndex?: number = 0;
 
   @IsNumber()
   @IsOptional()
   @Max(10)
   @Transform((prop) => parseInt(prop.value, 10))
-  pageSize?: number = 2;
+  pageSize?: number = 1;
 
   @IsString()
   @IsOptional()
