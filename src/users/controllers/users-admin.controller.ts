@@ -1,11 +1,26 @@
-import { Body, Controller, Delete, Param, Post } from '@nestjs/common';
-import { Role, RoleNames, User } from '../entities/user.entity';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UseInterceptors,
+} from '@nestjs/common';
+import {
+  ExceptionResponse,
+  Role,
+  RoleNames,
+  User,
+} from '../entities/user.entity';
 import { ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 import { UserByIdPipe } from '../pipes/user-by-id.pipe';
 import { RoleByNamePipe } from '../pipes/role-by-name.pipe';
 import { AddRoleDto } from '../dto/admin.dto';
 import { UsersService } from '../services/users.service';
 import { StoreService } from '../../store/store.service';
+import { Observable } from 'rxjs';
+import { OnCloseInterceptor } from '../interceptors/on-close.interceptor';
 
 @Controller('users-admin')
 @ApiTags('UserAdmin')
@@ -40,5 +55,25 @@ export class UsersAdminController {
     await this.storeService.save(user);
 
     return { user, role };
+  }
+
+  @Get('search')
+  @UseInterceptors(OnCloseInterceptor)
+  search() {
+    const request$ = new Observable((subscriber) => {
+      console.log('REQ Start');
+
+      const id = setInterval(() => {
+        subscriber.next(['record', 'record']);
+        subscriber.complete();
+      });
+
+      return () => {
+        console.log('REQ Complete');
+        clearInterval(id);
+      };
+    });
+
+    return request$;
   }
 }
