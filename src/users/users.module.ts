@@ -3,9 +3,11 @@ import { AuthController } from './controllers/auth.controller';
 import { UsersService } from './services/users.service';
 import { AuthService } from './services/auth.service';
 import { JwtModule } from '@nestjs/jwt';
-import { ConfigModule, ConfigService } from '@config';
 import { StoreModule } from '../store/store.module';
 import { UsersAdminController } from './controllers/users-admin.controller';
+import { ConfigModule, ConfigService } from '../config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserRepository } from './respository/user.repository';
 
 @Module({
   imports: [
@@ -18,9 +20,10 @@ import { UsersAdminController } from './controllers/users-admin.controller';
         signOptions: { expiresIn: '4d' },
       }),
     }),
+    TypeOrmModule.forFeature([UserRepository]),
   ],
   controllers: [AuthController, UsersAdminController],
-  providers: [UsersService, AuthService],
-  exports: [UsersService, AuthService],
+  providers: [UsersService, AuthService, UserRepository],
+  exports: [UsersService, AuthService, TypeOrmModule, UserRepository],
 })
 export class UsersModule {}

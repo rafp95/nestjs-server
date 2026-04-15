@@ -17,15 +17,15 @@ import { ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 import { UserByIdPipe } from '../pipes/user-by-id.pipe';
 import { RoleByNamePipe } from '../pipes/role-by-name.pipe';
 import { AddRoleDto } from '../dto/admin.dto';
-import { UsersService } from '../services/users.service';
-import { StoreService } from '../../store/store.service';
 import { Observable } from 'rxjs';
 import { OnCloseInterceptor } from '../interceptors/on-close.interceptor';
+import { EntityManager } from 'typeorm';
+import { UserRepository } from '../respository/user.repository';
 
 @Controller('users-admin')
 @ApiTags('UserAdmin')
 export class UsersAdminController {
-  constructor(private readonly storeService: StoreService) {}
+  constructor(private readonly storeService: UserRepository) {}
 
   @Post('/user/add-role')
   @ApiBody({

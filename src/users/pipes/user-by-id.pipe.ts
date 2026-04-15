@@ -7,10 +7,11 @@ import {
 import { AppService } from '../../app.service';
 import { StoreService } from '../../store/store.service';
 import { User } from '../entities/user.entity';
+import { EntityManager } from 'typeorm';
 
 @Injectable()
 export class UserByIdPipe implements PipeTransform {
-  constructor(private readonly storeService: StoreService) {}
+  constructor(private readonly storeService: EntityManager) {}
 
   async transform(value: string, metadata: ArgumentMetadata): Promise<User> {
     const id = +value;

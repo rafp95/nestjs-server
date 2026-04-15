@@ -21,12 +21,14 @@ import { ApiAuth } from '../decorators/api-auth.decorator';
 import { StoreService } from '../../store/store.service';
 import { AuthService } from '../services/auth.service';
 import { PerformanceInterceptor } from '../interceptors/performance.interceptor';
+import { EntityManager } from 'typeorm';
+import { UserRepository } from '../respository/user.repository';
 
 @Controller('auth')
 @ApiTags('Auth')
 export class AuthController {
   constructor(
-    private readonly storeService: StoreService,
+    private readonly userRepository: UserRepository,
     private readonly authService: AuthService,
   ) {}
 
@@ -37,7 +39,6 @@ export class AuthController {
   }
 
   @Post('register')
-  @ApiAuth(RoleNames.ADMIN)
   @UseInterceptors(PerformanceInterceptor)
   @UsePipes(
     new ValidationPipe({
@@ -46,7 +47,7 @@ export class AuthController {
     }),
   )
   async register(@Body() data: AuthRegisterDto): Promise<User> {
-    let user: User = await this.storeService.findOneBy(User, {
+    let user: User = await this.userRepository.findOneBy({
       email: data.email,
     });
 
@@ -60,7 +61,7 @@ export class AuthController {
       password,
     });
 
-    await this.storeService.save(user);
+    await this.userRepository.save(user);
 
     return user;
   }
@@ -69,7 +70,7 @@ export class AuthController {
   async login(
     @Body(ValidationPipe) data: AuthLoginDto,
   ): Promise<AuthLoginResponseDto> {
-    const user: User = await this.storeService.findOneBy(User, {
+    const user: User = await this.userRepository.findOneBy({
       email: data.email,
     });
 

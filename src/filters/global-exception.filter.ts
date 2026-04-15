@@ -5,7 +5,7 @@ import {
   HttpException,
   Logger,
 } from '@nestjs/common';
-import { ConfigService } from '@config';
+import { ConfigService } from '../config';
 
 @Catch()
 export class GlobalExceptionFilter<T> implements ExceptionFilter {

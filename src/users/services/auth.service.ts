@@ -4,13 +4,14 @@ import { RequestPayload, TokenPayload, User } from '../entities/user.entity';
 import { UsersService } from './users.service';
 import * as bcrypt from 'bcrypt';
 import { StoreService } from '../../store/store.service';
+import { EntityManager } from 'typeorm';
 
 @Injectable()
 export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
-    private storeService: StoreService,
+    private storeManger: EntityManager,
   ) {}
 
   async decodeUserToken(token: string): Promise<RequestPayload | null> {
@@ -22,7 +23,7 @@ export class AuthService {
       return null;
     }
 
-    const user = await this.storeService.findOneBy(User, { id: payload.sub });
+    const user = await this.storeManger.findOneBy(User, { id: payload.sub });
 
     return user ? { user, token } : null;
   }
