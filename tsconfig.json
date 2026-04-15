@@ -20,5 +20,9 @@
     "paths": {
       "@config": ["./src/config/index"]
     }
-  }
+  },
+  "ts-node": {
+    "files": true
+  },
+  "include": ["src/**/*"]
 }

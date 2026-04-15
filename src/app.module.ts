@@ -8,6 +8,7 @@ import { ContactsModule } from './contacts/contacts.module';
 import { UsersModule } from './users/users.module';
 import { ContactsApi } from './api-client-axios';
 import { GlobalExceptionFilter } from './filters/global-exception.filter';
+import { DbModule } from './db/db.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { GlobalExceptionFilter } from './filters/global-exception.filter';
     ContactsModule,
     UsersModule,
     ContactsApi,
+    DbModule,
   ],
   controllers: [AppController],
   providers: [
