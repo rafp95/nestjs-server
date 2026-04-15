@@ -21,11 +21,29 @@ import { Observable } from 'rxjs';
 import { OnCloseInterceptor } from '../interceptors/on-close.interceptor';
 import { EntityManager } from 'typeorm';
 import { UserRepository } from '../respository/user.repository';
+import { PrismaService } from '../../prisma.service';
 
 @Controller('users-admin')
 @ApiTags('UserAdmin')
 export class UsersAdminController {
-  constructor(private readonly storeService: UserRepository) {}
+  constructor(
+    private readonly storeService: UserRepository,
+    private readonly prisma: PrismaService,
+  ) {}
+
+  @Get('all')
+  async getAllUsers() {
+    const result = await this.prisma.user.findMany({
+      include: {
+        user_roles_role: {
+          include: {
+            role: true,
+          },
+        },
+      },
+    });
+    return result;
+  }
 
   @Post('/user/add-role')
   @ApiBody({

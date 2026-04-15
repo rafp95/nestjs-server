@@ -9,6 +9,8 @@ import { UsersModule } from './users/users.module';
 import { ContactsApi } from './api-client-axios';
 import { GlobalExceptionFilter } from './filters/global-exception.filter';
 import { DbModule } from './db/db.module';
+import { PrismaModule } from './prisma.module';
+import { PhotosModule } from './photos/photos.module';
 
 @Module({
   imports: [
@@ -16,8 +18,10 @@ import { DbModule } from './db/db.module';
     ConfigModule,
     ContactsModule,
     UsersModule,
-    ContactsApi,
+    // ContactsApi,
     DbModule,
+    PrismaModule,
+    PhotosModule,
   ],
   controllers: [AppController],
   providers: [

@@ -8,9 +8,11 @@ import { UsersAdminController } from './controllers/users-admin.controller';
 import { ConfigModule, ConfigService } from '../config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserRepository } from './respository/user.repository';
+import { PrismaModule } from '../prisma.module';
 
 @Module({
   imports: [
+    PrismaModule,
     StoreModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
