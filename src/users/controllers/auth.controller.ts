@@ -4,10 +4,9 @@ import {
   Controller,
   Get,
   Post,
-  UseFilters,
+  ValidationPipe,
   UseInterceptors,
   UsePipes,
-  ValidationPipe,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ExceptionResponse, RoleNames, User } from '../entities/user.entity';
@@ -22,11 +21,9 @@ import { ApiAuth } from '../decorators/api-auth.decorator';
 import { StoreService } from '../../store/store.service';
 import { AuthService } from '../services/auth.service';
 import { PerformanceInterceptor } from '../interceptors/performance.interceptor';
-import { UserExceptionFilter } from '../filters/user-exception.filter';
 
 @Controller('auth')
 @ApiTags('Auth')
-@UseFilters(UserExceptionFilter)
 export class AuthController {
   constructor(
     private readonly storeService: StoreService,
